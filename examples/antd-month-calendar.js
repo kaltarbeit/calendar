@@ -494,6 +494,8 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__mixin_CommonMixin__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__date_DateInput__ = __webpack_require__(29);
+
 
 
 
@@ -564,6 +566,18 @@ var MonthCalendar = function (_React$Component) {
       }
     };
 
+    _this.onDateInputChange = function (value) {
+      _this.onSelect(value, {
+        source: 'dateInput'
+      });
+    };
+
+    _this.onDateInputSelect = function (value) {
+      _this.onSelect(value, {
+        source: 'dateInputSelect'
+      });
+    };
+
     _this.handlePanelChange = function (_, mode) {
       if (mode !== 'date') {
         _this.setState({ mode: mode });
@@ -582,11 +596,39 @@ var MonthCalendar = function (_React$Component) {
     var props = this.props,
         state = this.state;
     var mode = state.mode,
-        value = state.value;
+        value = state.value,
+        selectedValue = state.selectedValue;
+    var locale = props.locale,
+        prefixCls = props.prefixCls,
+        disabledDate = props.disabledDate,
+        dateInputPlaceholder = props.dateInputPlaceholder,
+        disabledTime = props.disabledTime,
+        clearIcon = props.clearIcon,
+        inputMode = props.inputMode;
+
+
+    var dateInputElement = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__date_DateInput__["a" /* default */], {
+      format: this.getFormat(),
+      key: 'date-input',
+      value: value,
+      locale: locale,
+      placeholder: dateInputPlaceholder,
+      showClear: true,
+      disabledTime: disabledTime,
+      disabledDate: disabledDate,
+      onClear: this.onClear,
+      prefixCls: prefixCls,
+      selectedValue: selectedValue,
+      onChange: this.onDateInputChange,
+      onSelect: this.onDateInputSelect,
+      clearIcon: clearIcon,
+      inputMode: inputMode
+    });
 
     var children = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'div',
       { className: props.prefixCls + '-month-calendar-content' },
+      dateInputElement,
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'div',
         { className: props.prefixCls + '-month-header-wrap' },
@@ -638,7 +680,7 @@ MonthCalendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_e
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
@@ -1028,9 +1070,9 @@ var _initialiseProps = function _initialiseProps() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_util_es_Children_mapSelf__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__month_MonthPanel__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__year_YearPanel__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__decade_DecadePanel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__month_MonthPanel__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__year_YearPanel__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__decade_DecadePanel__ = __webpack_require__(39);
 
 
 
@@ -1406,6 +1448,263 @@ function TimePickerButton(_ref) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util__ = __webpack_require__(10);
+
+
+
+
+
+
+
+
+
+
+
+var cachedSelectionStart = void 0;
+var cachedSelectionEnd = void 0;
+var dateInputInstance = void 0;
+
+var DateInput = function (_React$Component) {
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_inherits___default()(DateInput, _React$Component);
+
+  function DateInput(props) {
+    __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, DateInput);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
+
+    _initialiseProps.call(_this);
+
+    var selectedValue = props.selectedValue;
+
+    _this.state = {
+      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, _this.props.format),
+      invalid: false,
+      hasFocus: false
+    };
+    return _this;
+  }
+
+  DateInput.prototype.componentDidUpdate = function componentDidUpdate() {
+    if (dateInputInstance && this.state.hasFocus && !this.state.invalid && !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
+      dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
+    }
+  };
+
+  DateInput.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, state) {
+    var newState = {};
+
+    if (dateInputInstance) {
+      cachedSelectionStart = dateInputInstance.selectionStart;
+      cachedSelectionEnd = dateInputInstance.selectionEnd;
+    }
+    // when popup show, click body will call this, bug!
+    var selectedValue = nextProps.selectedValue;
+    if (!state.hasFocus) {
+      newState = {
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, nextProps.format),
+        invalid: false
+      };
+    }
+
+    return newState;
+  };
+
+  DateInput.getInstance = function getInstance() {
+    return dateInputInstance;
+  };
+
+  DateInput.prototype.render = function render() {
+    var props = this.props;
+    var _state = this.state,
+        invalid = _state.invalid,
+        str = _state.str;
+    var locale = props.locale,
+        prefixCls = props.prefixCls,
+        placeholder = props.placeholder,
+        clearIcon = props.clearIcon,
+        inputMode = props.inputMode;
+
+    var invalidClass = invalid ? prefixCls + '-input-invalid' : '';
+    return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+      'div',
+      { className: prefixCls + '-input-wrap' },
+      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+        'div',
+        { className: prefixCls + '-date-input-wrap' },
+        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', {
+          ref: this.saveDateInput,
+          className: prefixCls + '-input ' + invalidClass,
+          value: str,
+          disabled: props.disabled,
+          placeholder: placeholder,
+          onChange: this.onInputChange,
+          onKeyDown: this.onKeyDown,
+          onFocus: this.onFocus,
+          onBlur: this.onBlur,
+          inputMode: inputMode
+        })
+      ),
+      props.showClear ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+        'a',
+        {
+          role: 'button',
+          title: locale.clear,
+          onClick: this.onClear
+        },
+        clearIcon || __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', { className: prefixCls + '-clear-btn' })
+      ) : null
+    );
+  };
+
+  return DateInput;
+}(__WEBPACK_IMPORTED_MODULE_3_react___default.a.Component);
+
+DateInput.propTypes = {
+  prefixCls: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  timePicker: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
+  value: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
+  disabledTime: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.any,
+  format: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string)]),
+  locale: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
+  disabledDate: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onChange: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  onClear: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  placeholder: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
+  clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
+};
+
+var _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.onClear = function () {
+    _this2.setState({
+      str: ''
+    });
+    _this2.props.onClear(null);
+  };
+
+  this.onInputChange = function (event) {
+    var str = event.target.value;
+    var _props = _this2.props,
+        disabledDate = _props.disabledDate,
+        format = _props.format,
+        onChange = _props.onChange,
+        selectedValue = _props.selectedValue;
+
+    // 没有内容，合法并直接退出
+
+    if (!str) {
+      onChange(null);
+      _this2.setState({
+        invalid: false,
+        str: str
+      });
+      return;
+    }
+
+    // 不合法直接退出
+    var parsed = __WEBPACK_IMPORTED_MODULE_8_moment___default()(str, format, true);
+    if (!parsed.isValid()) {
+      _this2.setState({
+        invalid: true,
+        str: str
+      });
+      return;
+    }
+
+    var value = _this2.props.value.clone();
+    value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+
+    if (!value || disabledDate && disabledDate(value)) {
+      _this2.setState({
+        invalid: true,
+        str: str
+      });
+      return;
+    }
+
+    if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
+      _this2.setState({
+        invalid: false,
+        str: str
+      });
+      onChange(value);
+    }
+  };
+
+  this.onFocus = function () {
+    _this2.setState({ hasFocus: true });
+  };
+
+  this.onBlur = function () {
+    _this2.setState(function (prevState, prevProps) {
+      return {
+        hasFocus: false,
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(prevProps.value, prevProps.format)
+      };
+    });
+  };
+
+  this.onKeyDown = function (event) {
+    var keyCode = event.keyCode;
+    var _props2 = _this2.props,
+        onSelect = _props2.onSelect,
+        value = _props2.value,
+        disabledDate = _props2.disabledDate;
+
+    if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
+      var validateDate = !disabledDate || !disabledDate(value);
+      if (validateDate) {
+        onSelect(value.clone());
+      }
+      event.preventDefault();
+    }
+  };
+
+  this.getRootDOMNode = function () {
+    return __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.findDOMNode(_this2);
+  };
+
+  this.focus = function () {
+    if (dateInputInstance) {
+      dateInputInstance.focus();
+    }
+  };
+
+  this.saveDateInput = function (dateInput) {
+    dateInputInstance = dateInput;
+  };
+};
+
+Object(__WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__["polyfill"])(DateInput);
+
+/* harmony default export */ __webpack_exports__["a"] = (DateInput);
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(2);
@@ -1423,8 +1722,8 @@ function TimePickerButton(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_Dom_contains__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_util_es_Dom_addEventListener__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_util_es_ContainerRender__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_Portal__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_util_es_ContainerRender__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_util_es_Portal__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_classnames__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils__ = __webpack_require__(16);
@@ -2162,7 +2461,7 @@ Object(__WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__["polyfill"])(Trigge
 
 /***/ }),
 
-/***/ 30:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2193,7 +2492,7 @@ exports.default = function (obj, key, value) {
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -2391,7 +2690,7 @@ ClassList.prototype.contains = function(name){
 
 /***/ }),
 
-/***/ 32:
+/***/ 33:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2529,7 +2828,7 @@ ContainerRender.defaultProps = {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2628,7 +2927,7 @@ Portal.propTypes = {
 
 /***/ }),
 
-/***/ 36:
+/***/ 37:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2801,7 +3100,7 @@ Object(__WEBPACK_IMPORTED_MODULE_5_react_lifecycles_compat__["polyfill"])(MonthP
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3022,7 +3321,7 @@ YearPanel.defaultProps = {
 
 /***/ }),
 
-/***/ 38:
+/***/ 39:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5173,7 +5472,7 @@ function isAncestorFixed(element) {
  * 获得元素的显示部分的区域
  */
 
-function getVisibleRectForElement(element) {
+function getVisibleRectForElement(element, alwaysByViewport) {
   var visibleRect = {
     left: 0,
     right: Infinity,
@@ -5246,7 +5545,7 @@ function getVisibleRectForElement(element) {
     element.style.position = originalPosition;
   }
 
-  if (isAncestorFixed(element)) {
+  if (alwaysByViewport || isAncestorFixed(element)) {
     // Clip by viewport's size.
     visibleRect.left = Math.max(visibleRect.left, scrollX);
     visibleRect.top = Math.max(visibleRect.top, scrollY);
@@ -5436,9 +5735,10 @@ function doAlign(el, tgtRegion, align, isTgtRegionVisible) {
   targetOffset = [].concat(targetOffset);
   overflow = overflow || {};
   var newOverflowCfg = {};
-  var fail = 0; // 当前节点可以被放置的显示区域
+  var fail = 0;
+  var alwaysByViewport = !!(overflow && overflow.alwaysByViewport); // 当前节点可以被放置的显示区域
 
-  var visibleRect = getVisibleRectForElement(source); // 当前节点所占的区域, left/top/width/height
+  var visibleRect = getVisibleRectForElement(source, alwaysByViewport); // 当前节点所占的区域, left/top/width/height
 
   var elRegion = getRegion(source); // 将 offset 转换成数值，支持百分比
 
@@ -5985,7 +6285,7 @@ AnimateChild.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_typeof__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Event__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_component_classes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_component_classes__);
 
 
@@ -6907,7 +7207,7 @@ CalendarFooter.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_KeyCode__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__picker_placements__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_trigger__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_trigger__ = __webpack_require__(30);
 
 
 
