@@ -30,7 +30,7 @@
     "url": "http://github.com/kaltarbeit/calendar/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/@kaltarbeit"
   },
   "licenses": "MIT",
   "config": {
