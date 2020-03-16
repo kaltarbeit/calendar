@@ -11,6 +11,7 @@ import {
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import moment from 'moment';
+import DateInput from './date/DateInput';
 
 class MonthCalendar extends React.Component {
   static propTypes = {
@@ -83,6 +84,18 @@ class MonthCalendar extends React.Component {
     }
   }
 
+  onDateInputChange = (value) => {
+    this.onSelect(value, {
+      source: 'dateInput',
+    });
+  }
+
+  onDateInputSelect = (value) => {
+    this.onSelect(value, {
+      source: 'dateInputSelect',
+    });
+  }
+
   handlePanelChange = (_, mode) => {
     if (mode !== 'date') {
       this.setState({ mode });
@@ -91,9 +104,35 @@ class MonthCalendar extends React.Component {
 
   render() {
     const { props, state } = this;
-    const { mode, value } = state;
+    const { mode, value, selectedValue } = state;
+    const {
+      locale, prefixCls, disabledDate,
+      dateInputPlaceholder, disabledTime, clearIcon, inputMode,
+    } = props;
+
+    const dateInputElement = (
+      <DateInput
+        format={this.getFormat()}
+        key="date-input"
+        value={value}
+        locale={locale}
+        placeholder={dateInputPlaceholder}
+        showClear
+        disabledTime={disabledTime}
+        disabledDate={disabledDate}
+        onClear={this.onClear}
+        prefixCls={prefixCls}
+        selectedValue={selectedValue}
+        onChange={this.onDateInputChange}
+        onSelect={this.onDateInputSelect}
+        clearIcon={clearIcon}
+        inputMode={inputMode}
+      />
+    );
+
     const children = (
       <div className={`${props.prefixCls}-month-calendar-content`}>
+        {dateInputElement}
         <div className={`${props.prefixCls}-month-header-wrap`}>
           <CalendarHeader
             prefixCls={props.prefixCls}
