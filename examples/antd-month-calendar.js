@@ -595,6 +595,12 @@ var MonthCalendar = function (_React$Component) {
     return _this;
   }
 
+  MonthCalendar.prototype.componentDidMount = function componentDidMount() {
+    if (this.props.showDateInput) {
+      this.saveFocusElement(__WEBPACK_IMPORTED_MODULE_13__date_DateInput__["a" /* default */].getInstance());
+    }
+  };
+
   MonthCalendar.prototype.render = function render() {
     var props = this.props,
         state = this.state;
@@ -631,8 +637,7 @@ var MonthCalendar = function (_React$Component) {
     var children = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'div',
       {
-        className: props.prefixCls + '-month-calendar-content',
-        tabIndex: this.props.focusablePanel ? 0 : undefined
+        className: props.prefixCls + '-month-calendar-content'
       },
       dateInputElement,
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
