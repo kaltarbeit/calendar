@@ -25,6 +25,8 @@ export const calendarMixinPropTypes = {
 
 export const calendarMixinDefaultProps = {
   onKeyDown: noop,
+  focusablePanel: true,
+  showDateInput: true,
 };
 
 export const calendarMixinWrapper = ComposeComponent => class extends ComposeComponent {

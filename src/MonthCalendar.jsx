@@ -23,6 +23,8 @@ class MonthCalendar extends React.Component {
     selectedValue: PropTypes.object,
     defaultSelectedValue: PropTypes.object,
     disabledDate: PropTypes.func,
+    showDateInput: PropTypes.bool,
+    focusablePanel: PropTypes.bool,
   }
 
   static defaultProps = Object.assign({}, defaultProp, calendarMixinDefaultProps);
@@ -38,6 +40,9 @@ class MonthCalendar extends React.Component {
   }
 
   onKeyDown = (event) => {
+    if (event.target.nodeName.toLowerCase() === 'input') {
+      return undefined;
+    }
     const keyCode = event.keyCode;
     const ctrlKey = event.ctrlKey || event.metaKey;
     const stateValue = this.state.value;
@@ -110,7 +115,7 @@ class MonthCalendar extends React.Component {
       dateInputPlaceholder, disabledTime, clearIcon, inputMode,
     } = props;
 
-    const dateInputElement = (
+    const dateInputElement = props.showDateInput ? (
       <DateInput
         format={this.getFormat()}
         key="date-input"
@@ -128,10 +133,13 @@ class MonthCalendar extends React.Component {
         clearIcon={clearIcon}
         inputMode={inputMode}
       />
-    );
+    ) : null;
 
     const children = (
-      <div className={`${props.prefixCls}-month-calendar-content`}>
+      <div
+        className={`${props.prefixCls}-month-calendar-content`}
+        tabIndex={this.props.focusablePanel ? 0 : undefined}
+      >
         {dateInputElement}
         <div className={`${props.prefixCls}-month-header-wrap`}>
           <CalendarHeader
