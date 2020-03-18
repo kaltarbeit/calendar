@@ -39,6 +39,12 @@ class MonthCalendar extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.showDateInput) {
+      this.saveFocusElement(DateInput.getInstance());
+    }
+  }
+
   onKeyDown = (event) => {
     if (event.target.nodeName.toLowerCase() === 'input') {
       return undefined;
@@ -138,7 +144,6 @@ class MonthCalendar extends React.Component {
     const children = (
       <div
         className={`${props.prefixCls}-month-calendar-content`}
-        tabIndex={this.props.focusablePanel ? 0 : undefined}
       >
         {dateInputElement}
         <div className={`${props.prefixCls}-month-header-wrap`}>
