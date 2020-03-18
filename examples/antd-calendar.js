@@ -6961,7 +6961,9 @@ var calendarMixinPropTypes = {
 };
 
 var calendarMixinDefaultProps = {
-  onKeyDown: noop
+  onKeyDown: noop,
+  focusablePanel: true,
+  showDateInput: true
 };
 
 var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {

@@ -519,6 +519,9 @@ var MonthCalendar = function (_React$Component) {
     var _this = __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
 
     _this.onKeyDown = function (event) {
+      if (event.target.nodeName.toLowerCase() === 'input') {
+        return undefined;
+      }
       var keyCode = event.keyCode;
       var ctrlKey = event.ctrlKey || event.metaKey;
       var stateValue = _this.state.value;
@@ -607,7 +610,7 @@ var MonthCalendar = function (_React$Component) {
         inputMode = props.inputMode;
 
 
-    var dateInputElement = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__date_DateInput__["a" /* default */], {
+    var dateInputElement = props.showDateInput ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__date_DateInput__["a" /* default */], {
       format: this.getFormat(),
       key: 'date-input',
       value: value,
@@ -623,11 +626,14 @@ var MonthCalendar = function (_React$Component) {
       onSelect: this.onDateInputSelect,
       clearIcon: clearIcon,
       inputMode: inputMode
-    });
+    }) : null;
 
     var children = __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'div',
-      { className: props.prefixCls + '-month-calendar-content' },
+      {
+        className: props.prefixCls + '-month-calendar-content',
+        tabIndex: this.props.focusablePanel ? 0 : undefined
+      },
       dateInputElement,
       __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
         'div',
@@ -665,7 +671,9 @@ MonthCalendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_exte
   defaultValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   defaultSelectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
-  disabledDate: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func
+  disabledDate: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
+  showDateInput: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  focusablePanel: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
 });
 MonthCalendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_11__mixin_CommonMixin__["b" /* defaultProp */], __WEBPACK_IMPORTED_MODULE_10__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */]);
 
@@ -6935,7 +6943,9 @@ var calendarMixinPropTypes = {
 };
 
 var calendarMixinDefaultProps = {
-  onKeyDown: noop
+  onKeyDown: noop,
+  focusablePanel: true,
+  showDateInput: true
 };
 
 var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
