@@ -6,6 +6,7 @@ import createChainedFunction from 'rc-util/lib/createChainedFunction';
 import KeyCode from 'rc-util/lib/KeyCode';
 import placements from './picker/placements';
 import Trigger from 'rc-trigger';
+import moment from 'moment';
 
 function noop() {
 }
@@ -129,6 +130,47 @@ class Picker extends React.Component {
     this.setOpen(open);
   }
 
+  onInputChange = (e) => {
+    const str = e.target.value;
+
+    // 没有内容，合法并直接退出
+
+    // 不合法直接退出
+    const parsed = moment(str, this.getFormat(), true);
+
+    if (!parsed.isValid()) {
+      return;
+    }
+
+    const value = this.props.value.clone();
+    value
+      .year(parsed.year())
+      .month(parsed.month())
+      .date(parsed.date())
+      .hour(parsed.hour())
+      .minute(parsed.minute())
+      .second(parsed.second());
+
+    this.onCalendarSelect(value, {
+      source: 'dateInput',
+    });
+  };
+
+  getFormat = () => {
+    const { calendar } = this.props;
+    let { format } = calendar.props;
+    const { locale, timePicker } = calendar.props;
+
+    if (!format) {
+      if (timePicker) {
+        format = locale.dateTimeFormat;
+      } else {
+        format = locale.dateFormat;
+      }
+    }
+    return format;
+  };
+
   static getDerivedStateFromProps(nextProps) {
     const newState = {};
     const { value, open } = nextProps;
@@ -221,7 +263,10 @@ class Picker extends React.Component {
         prefixCls={prefixCls}
         popupClassName={dropdownClassName}
       >
-        {React.cloneElement(children(state, props), { onKeyDown: this.onKeyDown })}
+        {React.cloneElement(children(state, props), {
+          onKeyDown: this.onKeyDown,
+          onChange: this.onInputChange,
+        })}
       </Trigger>
     );
   }

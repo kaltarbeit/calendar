@@ -65,6 +65,7 @@ class Demo extends React.Component {
     const state = this.state;
     const calendar = (<MonthCalendar
       locale={cn ? zhCN : enUS}
+      format={format}
       style={{ zIndex: 1000 }}
     />);
     return (<div style={{ width: 240, margin: 20 }}>
@@ -97,9 +98,8 @@ class Demo extends React.Component {
             ({ value }) => {
               return (<input
                 style={{ width: 200 }}
-                readOnly
                 disabled={state.disabled}
-                value={value && value.format(format)}
+                defaultValue={value && value.format(format)}
                 placeholder="请选择日期"
               />);
             }
