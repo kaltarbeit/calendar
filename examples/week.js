@@ -7488,6 +7488,9 @@ CalendarFooter.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_KeyCode__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__picker_placements__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rc_trigger__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_moment__);
+
 
 
 
@@ -7589,7 +7592,10 @@ var Picker = function (_React$Component) {
         prefixCls: prefixCls,
         popupClassName: dropdownClassName
       },
-      __WEBPACK_IMPORTED_MODULE_3_react___default.a.cloneElement(children(state, props), { onKeyDown: this.onKeyDown })
+      __WEBPACK_IMPORTED_MODULE_3_react___default.a.cloneElement(children(state, props), {
+        onKeyDown: this.onKeyDown,
+        onChange: this.onInputChange
+      })
     );
   };
 
@@ -7673,6 +7679,44 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onVisibleChange = function (open) {
     _this2.setOpen(open);
+  };
+
+  this.onInputChange = function (e) {
+    var str = e.target.value;
+
+    // 没有内容，合法并直接退出
+
+    // 不合法直接退出
+    var parsed = __WEBPACK_IMPORTED_MODULE_11_moment___default()(str, _this2.getFormat(), true);
+
+    if (!parsed.isValid()) {
+      return;
+    }
+
+    var value = _this2.props.value.clone();
+    value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+
+    _this2.onCalendarSelect(value, {
+      source: 'dateInput'
+    });
+  };
+
+  this.getFormat = function () {
+    var calendar = _this2.props.calendar;
+    var format = calendar.props.format;
+    var _calendar$props = calendar.props,
+        locale = _calendar$props.locale,
+        timePicker = _calendar$props.timePicker;
+
+
+    if (!format) {
+      if (timePicker) {
+        format = locale.dateTimeFormat;
+      } else {
+        format = locale.dateFormat;
+      }
+    }
+    return format;
   };
 
   this.getCalendarElement = function () {
